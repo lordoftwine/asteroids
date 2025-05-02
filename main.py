@@ -7,6 +7,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from circleshape import *
+from shot import Shot
 
 def main():
     pygame.init()
@@ -18,18 +19,19 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
     
     # put those groups into containers
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable,) #note the comma, making this a tuple
-    
+    Shot.containers = (shots, updatable, drawable)
+
     # create objects
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
 
-        
-    
+
     game_on = True
     while game_on:
         for event in pygame.event.get():
@@ -43,11 +45,12 @@ def main():
             i.draw(screen)
         
         # update the things that need updating
-        updatable.update(dt)
+        for i in updatable:
+            i.update(dt)
 
         # check for collisions
         for asteroid in asteroids:
-            if asteroid.collision_check(player) == False:
+            if asteroid.collision_check(player) == True:
                 print("Game over!")
                 game_on = False
         
