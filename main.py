@@ -20,8 +20,8 @@ def main():
     
     # put those groups into containers
     Player.containers = (updatable, drawable)
-    Asteroid.containters = (asteroids, updatable, drawable)
-    AsteroidField.containers = (updatable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable,) #note the comma, making this a tuple
     
     # create objects
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
