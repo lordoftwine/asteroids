@@ -6,6 +6,7 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from circleshape import *
 
 def main():
     pygame.init()
@@ -40,7 +41,15 @@ def main():
         # Draw the player
         for i in drawable:
             i.draw(screen)
+        
+        # update the things that need updating
         updatable.update(dt)
+
+        # check for collisions
+        for asteroid in asteroids:
+            if asteroid.collision_check(player) == False:
+                print("Game over!")
+                game_on = False
         
         # Update the display
         pygame.display.flip()
